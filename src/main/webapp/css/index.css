@@ -1,0 +1,48 @@
+
+.fullscreen {
+    max-width: 100%;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+}
+
+.centered-text {
+    width: 100%;
+    text-align: center;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+
+    position: absolute;
+    object-fit: cover;
+    overflow: hidden;
+
+    z-index: -1;
+}
+
+#filter {
+    background-color: rgba(17, 17, 17, 0.9);
+}
+
+#padding-layer {
+    padding: 15% 20%;
+}
+
+#container {
+    padding: 5% 0%;
+    border-radius: 16px;
+}
+
+h1 {
+    font-size: 6em;
+    font-family: GothamBold, sans-serif;
+    text-transform: uppercase;
+
+
+    background-image: linear-gradient(45deg, var(--darkteal), var(--lightteal));
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
