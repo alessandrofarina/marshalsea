@@ -41,8 +41,8 @@ public class Album implements Serializable {
         this.year = year;
     }
 
-    public Album(int id, int artistId, String title, int tracks, int duration, int year, Artist artist, Collection<Track> tracklist) {
-        this.albumId = id;
+    public Album(int albumId, int artistId, String title, int tracks, int duration, int year, Artist artist, Collection<Track> tracklist) {
+        this.albumId = albumId;
         this.artistId = artistId;
         this.title = title;
         this.tracks = tracks;

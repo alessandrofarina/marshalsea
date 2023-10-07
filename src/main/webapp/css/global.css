@@ -24,11 +24,9 @@
 
 :root {
     --mainblack: #111111;
-
     --darkteal: #008080;
     --mediumteal: #44B0B0;
     --lightteal: #AAD0D0;
-
 }
 
 * {

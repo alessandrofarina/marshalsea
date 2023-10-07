@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import album.Album;
+import track.Track;
 
 @Entity(name = "artist")
 public class Artist implements Serializable {
@@ -18,6 +19,9 @@ public class Artist implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "artist")
     private Collection<Album> albums;
 
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "featuring")
+    private Collection<Track> featuring;
+
     public Artist() {}
 
     public Artist(int artistId, String alias) {
@@ -25,10 +29,11 @@ public class Artist implements Serializable {
         this.alias = alias;
     }
 
-    public Artist(int id, String alias, Collection<Album> albums) {
-        this.artistId = id;
+    public Artist(int artistId, String alias, Collection<Album> albums, Collection<Track> featuring) {
+        this.artistId = artistId;
         this.alias = alias;
         this.albums = albums;
+        this.featuring = featuring;
     }
 
     public int getArtistId() {
@@ -55,12 +60,21 @@ public class Artist implements Serializable {
         this.albums = albums;
     }
 
+    public Collection<Track> getFeaturing() {
+        return featuring;
+    }
+
+    public void setFeaturing(Collection<Track> featuring) {
+        this.featuring = featuring;
+    }
+
     @Override
     public String toString() {
         return "Artist{" +
                 "artistId=" + artistId +
                 ", alias='" + alias + '\'' +
                 ", albums=" + albums +
+                ", featuring=" + featuring +
                 '}';
     }
 }
