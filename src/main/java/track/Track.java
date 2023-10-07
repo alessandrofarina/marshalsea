@@ -13,8 +13,6 @@ public class Track implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int trackId;
-    @Column(name = "album")
-    private int albumId;
     @Column(name = "title", length = 128)
     private String title;
     @Column(name = "trackindex")
@@ -22,7 +20,7 @@ public class Track implements Serializable {
     @Column(name = "duration")
     private int duration;
     @ManyToOne
-    @JoinColumn(name = "albumId")
+    @JoinColumn(name = "album")
     private Album album;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -35,9 +33,8 @@ public class Track implements Serializable {
 
     public Track() {}
 
-    public Track(int trackId, int albumId, String title, int index, int duration) {
+    public Track(int trackId, String title, int index, int duration) {
         this.trackId = trackId;
-        this.albumId = albumId;
         this.title = title;
         this.index = index;
         this.duration = duration;
@@ -45,7 +42,6 @@ public class Track implements Serializable {
 
     public Track(int trackId, int albumId, String title, int index, int duration, Album album, Collection<Artist> featuring) {
         this.trackId = trackId;
-        this.albumId = albumId;
         this.title = title;
         this.index = index;
         this.duration = duration;
@@ -59,14 +55,6 @@ public class Track implements Serializable {
 
     public void setTrackId(int trackId) {
         this.trackId = trackId;
-    }
-
-    public int getAlbumId() {
-        return albumId;
-    }
-
-    public void setAlbumId(int albumId) {
-        this.albumId = albumId;
     }
 
     public String getTitle() {
@@ -113,7 +101,6 @@ public class Track implements Serializable {
     public String toString() {
         return "Track{" +
                 "trackId=" + trackId +
-                ", albumId=" + albumId +
                 ", title='" + title + '\'' +
                 ", index=" + index +
                 ", duration=" + duration +

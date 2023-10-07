@@ -1,9 +1,7 @@
 package playlist;
 
 import added.Added;
-import artist.Artist;
 import jakarta.persistence.*;
-import track.Track;
 import user.User;
 
 import java.io.Serializable;
@@ -16,28 +14,42 @@ public class Playlist implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int playlistId;
-    @Column(name = "enduser")
-    private int userId;
     @Column(name = "title")
     private String title;
-    @Column(name = "lastTimeAccess")
-    private String lastTimeAccess;
+    @Column(name = "lastAccessTime")
+    private String lastAccessTime;
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "enduser")
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "invite",
+            joinColumns = @JoinColumn(name = "playlist"),
+            inverseJoinColumns = @JoinColumn(name = "guest")
+    )
+    private Collection<User> guests;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "playlist")
     private Collection<Added> tracklist;
 
     public Playlist() {}
 
-    public Playlist(int playlistId, int userId, String title, String lastTimeAccess, User user, Collection<Added> tracklist) {
+    public Playlist(int playlistId, String title, String lastAccessTime, User user, Collection<User> guests, Collection<Added> tracklist) {
         this.playlistId = playlistId;
-        this.userId = userId;
         this.title = title;
-        this.lastTimeAccess = lastTimeAccess;
+        this.lastAccessTime = lastAccessTime;
         this.user = user;
+        this.guests = guests;
         this.tracklist = tracklist;
+    }
+
+    public Collection<User> getGuests() {
+        return guests;
+    }
+
+    public void setGuests(Collection<User> guests) {
+        this.guests = guests;
     }
 
     public int getPlaylistId() {
@@ -48,14 +60,6 @@ public class Playlist implements Serializable {
         this.playlistId = playlistId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -64,12 +68,12 @@ public class Playlist implements Serializable {
         this.title = title;
     }
 
-    public String getLastTimeAccess() {
-        return lastTimeAccess;
+    public String getLastAccessTime() {
+        return lastAccessTime;
     }
 
-    public void setLastTimeAccess(String lastTimeAccess) {
-        this.lastTimeAccess = lastTimeAccess;
+    public void setLastAccessTime(String lastTimeAccess) {
+        this.lastAccessTime = lastTimeAccess;
     }
 
     public User getUser() {
@@ -86,5 +90,14 @@ public class Playlist implements Serializable {
 
     public void setTracklist(Collection<Added> tracklist) {
         this.tracklist = tracklist;
+    }
+
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "playlistId=" + playlistId +
+                ", title='" + title + '\'' +
+                ", lastAccessTime='" + lastAccessTime + '\'' +
+                '}';
     }
 }

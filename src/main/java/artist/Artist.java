@@ -19,7 +19,12 @@ public class Artist implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "artist")
     private Collection<Album> albums;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "featuring")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "featuring",
+            joinColumns = @JoinColumn(name = "artist"),
+            inverseJoinColumns = @JoinColumn(name = "track")
+    )
     private Collection<Track> featuring;
 
     public Artist() {}
@@ -73,8 +78,6 @@ public class Artist implements Serializable {
         return "Artist{" +
                 "artistId=" + artistId +
                 ", alias='" + alias + '\'' +
-                ", albums=" + albums +
-                ", featuring=" + featuring +
                 '}';
     }
 }

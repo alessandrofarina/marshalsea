@@ -14,8 +14,6 @@ public class Album implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int albumId;
-    @Column(name = "artist")
-    private int artistId;
     @Column(name = "title")
     private String title;
     @Column(name = "tracks")
@@ -25,25 +23,23 @@ public class Album implements Serializable {
     @Column(name = "year")
     private int year;
     @ManyToOne
-    @JoinColumn(name = "artistId")
+    @JoinColumn(name = "artist")
     private Artist artist;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "album")
     private Collection<Track> tracklist;
 
     public Album() {}
 
-    public Album(int albumId, int artistId, String title, int tracks, int duration, int year) {
+    public Album(int albumId, String title, int tracks, int duration, int year) {
         this.albumId = albumId;
-        this.artistId = artistId;
         this.title = title;
         this.tracks = tracks;
         this.duration = duration;
         this.year = year;
     }
 
-    public Album(int albumId, int artistId, String title, int tracks, int duration, int year, Artist artist, Collection<Track> tracklist) {
+    public Album(int albumId, String title, int tracks, int duration, int year, Artist artist, Collection<Track> tracklist) {
         this.albumId = albumId;
-        this.artistId = artistId;
         this.title = title;
         this.tracks = tracks;
         this.duration = duration;
@@ -58,14 +54,6 @@ public class Album implements Serializable {
 
     public void setAlbumId(int albumId) {
         this.albumId = albumId;
-    }
-
-    public int getArtistId() {
-        return artistId;
-    }
-
-    public void setArtistId(int artistId) {
-        this.artistId = artistId;
     }
 
     public String getTitle() {
@@ -124,8 +112,6 @@ public class Album implements Serializable {
                 ", tracks=" + tracks +
                 ", duration=" + duration +
                 ", year=" + year +
-                ", artist=" + artist +
-                ", tracklist=" + tracklist +
                 '}';
     }
 }
